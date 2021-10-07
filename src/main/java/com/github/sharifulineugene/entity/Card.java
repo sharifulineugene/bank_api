@@ -1,6 +1,5 @@
 package com.github.sharifulineugene.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,7 +27,6 @@ public final class Card {
             ,CascadeType.DETACH
             ,CascadeType.REFRESH})
     @JoinColumn(name="account_id")
-    @JsonIgnore
     private Account account;
 
     @Column(name = "status")

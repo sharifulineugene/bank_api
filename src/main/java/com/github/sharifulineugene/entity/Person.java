@@ -1,6 +1,5 @@
 package com.github.sharifulineugene.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,7 +27,6 @@ public class Person {
     private String date_of_birth;
 
     @OneToMany(mappedBy = "person",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<Account> accounts;
 
     @Override

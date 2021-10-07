@@ -1,11 +1,9 @@
 package com.github.sharifulineugene.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
-import java.beans.ConstructorProperties;
 import java.util.ArrayList;
 import java.util.List;
 
