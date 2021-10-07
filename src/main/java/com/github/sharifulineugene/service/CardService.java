@@ -23,6 +23,7 @@ public class CardService implements ICardService{
         this.cardMapper = cardMapper;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<CardDto> getAll() {
         return cardDAO.index().stream().map(cardMapper::toDto).collect(Collectors.toList());
@@ -38,6 +39,7 @@ public class CardService implements ICardService{
         cardDAO.update(cardMapper.toEntity(object));
     }
 
+    @Transactional(readOnly = true)
     @Override
     public CardDto get(int id) {
         return cardMapper.toDto(cardDAO.show(id));

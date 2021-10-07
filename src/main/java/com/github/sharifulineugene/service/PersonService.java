@@ -22,6 +22,7 @@ public class PersonService implements IPersonService{
         this.personMapper = personMapper;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<PersonDto> getAll() {
         return personDAO.index().stream().map(personMapper::toDto).collect(Collectors.toList());
@@ -37,6 +38,7 @@ public class PersonService implements IPersonService{
         personDAO.update(personMapper.toEntity(object));
     }
 
+    @Transactional(readOnly = true)
     @Override
     public PersonDto get(int id) {
         return personMapper.toDto(personDAO.show(id));
