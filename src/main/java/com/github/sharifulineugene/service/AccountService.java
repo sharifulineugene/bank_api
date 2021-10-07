@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
+@Transactional()
 public class AccountService implements IAccountService{
 
     private IAccountDao accountDAO;
@@ -28,7 +28,7 @@ public class AccountService implements IAccountService{
         this.accountMapper = accountMapper;
         this.cardMapper = cardMapper;
     }
-
+    @Transactional(readOnly = true)
     @Override
     public List<AccountDto> getAll() {
         return accountDAO.index().stream().map(accountMapper::toDto).collect(Collectors.toList());
@@ -44,6 +44,7 @@ public class AccountService implements IAccountService{
         accountDAO.update(accountMapper.toEntity(object));
     }
 
+    @Transactional(readOnly = true)
     @Override
     public AccountDto get(int id) {
         return accountMapper.toDto(accountDAO.show(id));
@@ -54,7 +55,7 @@ public class AccountService implements IAccountService{
         accountDAO.delete(id);
     }
 
-
+    @Transactional(readOnly = true)
     @Override
     public List<CardDto> getCardsByAccountId(int account_id) {
         return accountDAO.getCardsByAccountId(account_id).stream().map(cardMapper::toDto).collect(Collectors.toList());

@@ -80,32 +80,12 @@ public class SpringConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    @Lazy
-    public LocalSessionFactoryBean testSessionFactory() {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("com.github.sharifulineugene.entity");
-        Properties props = new Properties();
-        props.setProperty("hibernate.dialect","org.hibernate.dialect.H2Dialect");
-        props.setProperty("hibernate.show_sql", "true");
-        sessionFactory.setHibernateProperties(props);
-        return sessionFactory;
-    }
-
-    @Bean
-    @Lazy
-    public HibernateTransactionManager testTransactionManager() {
-        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactory().getObject());
-        return transactionManager;
-    }
-
-    @Bean
     public ModelMapper mapper() {
         return new ModelMapper();
     }
 
     @Bean
+    @Lazy
     public SpringLiquibase liquibase() {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setChangeLog("classpath:changelog.xml");
