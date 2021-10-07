@@ -1,34 +1,39 @@
 package com.github.sharifulineugene.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
+import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+
+@Entity
+@Table(name = "card")
+@Getter
+@Setter
 public final class Card {
-    private final int id;
-    private final String cardNumber;
-    private final String expDate;
-    private final Account account;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
-    public Card(int id,String cardNumber, String expDate, Account account) {
-        this.id = id;
-        this.cardNumber = cardNumber;
-        this.expDate = expDate;
-        this.account = account;
-    }
+    @Column(name = "card_number")
+    private String cardNumber;
 
-    public String getCardNumber() {
-        return cardNumber;
-    }
+    @Pattern(regexp="^(0[1-9]|1[0-2])\\/?([0-9]{4}|[0-9]{2})$")
+    @Column(name = "exp_date")
+    private String expDate;
 
-    public String getExpDate() {
-        return expDate;
-    }
+    @ManyToOne(cascade={CascadeType.MERGE
+            ,CascadeType.PERSIST
+            ,CascadeType.DETACH
+            ,CascadeType.REFRESH})
+    @JoinColumn(name="account_id")
+    @JsonIgnore
+    private Account account;
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public int getId() {
-        return id;
-    }
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @Override
     public String toString() {
@@ -37,6 +42,11 @@ public final class Card {
                 ", cardNumber='" + cardNumber + '\'' +
                 ", expDate='" + expDate + '\'' +
                 ", account=" + account +
+                ", status=" + status +
                 '}';
+    }
+
+    public enum Status {
+        ACTIVE, NEW, BLOCKED;
     }
 }
