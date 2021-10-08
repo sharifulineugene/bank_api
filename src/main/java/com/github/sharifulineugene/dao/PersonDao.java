@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public class PersonDao implements IPersonDao {
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     @Autowired
     public PersonDao(SessionFactory sessionFactory) {

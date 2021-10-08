@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/cards")
 public class CardController {
-    private ICardService service;
+    private final ICardService service;
 
     @Autowired
     public CardController(ICardService service) {

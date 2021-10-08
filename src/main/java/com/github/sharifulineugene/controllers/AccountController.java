@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
-    private IAccountService service;
+    private final IAccountService service;
 
 
     @Autowired
@@ -28,7 +28,7 @@ public class AccountController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<AccountIncorrectData> handleException(
+    public ResponseEntity<AccountIncorrectData> handleExceptionNoSuchAccount(
             NoSuchAccountException ex) {
         AccountIncorrectData data = new AccountIncorrectData();
         data.setInfo(ex.getMessage());
@@ -36,7 +36,7 @@ public class AccountController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<AddBalanceValueIncorrect> handleException(AddBalanceValueIncorrectException ex) {
+    public ResponseEntity<AddBalanceValueIncorrect> handleExceptionBalanceValue(AddBalanceValueIncorrectException ex) {
         AddBalanceValueIncorrect data = new AddBalanceValueIncorrect();
         data.setInfo(ex.getMessage());
         return new ResponseEntity<AddBalanceValueIncorrect>(data, HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);

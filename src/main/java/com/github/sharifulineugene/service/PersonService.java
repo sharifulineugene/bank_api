@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class PersonService implements IPersonService{
-    private IPersonDao personDAO;
-    private PersonMapper personMapper;
+    private final IPersonDao personDAO;
+    private final PersonMapper personMapper;
 
     @Autowired
     public PersonService(IPersonDao personDAO, PersonMapper personMapper) {

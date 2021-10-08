@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
 @Transactional()
 public class AccountService implements IAccountService{
 
-    private IAccountDao accountDAO;
-    private AccountMapper accountMapper;
-    private CardMapper cardMapper;
+    private final IAccountDao accountDAO;
+    private final AccountMapper accountMapper;
+    private final CardMapper cardMapper;
 
     @Autowired
     public AccountService(IAccountDao accountDAO, AccountMapper accountMapper, CardMapper cardMapper) {

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public class CardDao implements ICardDao {
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     @Autowired
     public CardDao(SessionFactory sessionFactory) {

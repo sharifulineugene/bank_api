@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 @Transactional
 public class CardService implements ICardService{
 
-    private ICardDao cardDAO;
-    private CardMapper cardMapper;
+    private final ICardDao cardDAO;
+    private final CardMapper cardMapper;
 
     @Autowired
     public CardService(ICardDao cardDAO, CardMapper cardMapper) {

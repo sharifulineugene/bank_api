@@ -10,7 +10,7 @@ import java.util.List;
 public class AccountDto {
     private int id;
     private String number;
-    private Person person;
+    private PersonDto person;
     private long balance;
     private List<CardDto> cards;
 
