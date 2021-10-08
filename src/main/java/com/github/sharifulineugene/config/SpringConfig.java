@@ -1,14 +1,13 @@
 package com.github.sharifulineugene.config;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -16,49 +15,36 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
-import java.beans.PropertyVetoException;
-import java.beans.Transient;
 import java.util.Properties;
 
 @Configuration
 @ComponentScan("com.github.sharifulineugene")
 @EnableWebMvc
+@PropertySource(value = "classpath:application.properties")
 @EnableTransactionManagement
 public class SpringConfig implements WebMvcConfigurer {
-    private final ApplicationContext applicationContext;
+    private final Environment environment;
+    private final ApplicationContext context;
 
     @Autowired
-    public SpringConfig(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
+    public SpringConfig(Environment environment, ApplicationContext context) {
+        this.environment = environment;
+        this.context = context;
+    }
+
+    HikariConfig hikariConfig (){
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDriverClassName(environment.getProperty("db.driver.name"));
+        hikariConfig.setJdbcUrl(environment.getProperty("db.testUrl"));
+        return hikariConfig;
     }
 
     @Bean
     public DataSource dataSource() {
-        ComboPooledDataSource dataSource = new ComboPooledDataSource();
-        try {
-            dataSource.setDriverClass("org.h2.Driver");
-            dataSource.setJdbcUrl("jdbc:h2:/Users/u19571283/" +
-                    "IdeaProjects/bank_api/src/main/resources/database");
-        } catch (PropertyVetoException e) {
-            e.printStackTrace();
-        }
-        return dataSource;
+        return new HikariDataSource(hikariConfig());
 
     }
 
-    @Bean
-    @Lazy
-    public DataSource testDataSource() {
-        ComboPooledDataSource dataSource = new ComboPooledDataSource();
-        try {
-            dataSource.setDriverClass("org.h2.Driver");
-            dataSource.setJdbcUrl("jdbc:h2:mem:test");
-        } catch (PropertyVetoException e) {
-            e.printStackTrace();
-        }
-        return dataSource;
-
-    }
 
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
@@ -85,7 +71,6 @@ public class SpringConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    @Lazy
     public SpringLiquibase liquibase() {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setChangeLog("classpath:changelog.xml");
