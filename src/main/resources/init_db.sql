@@ -9,15 +9,17 @@ create table PERSON
     DATE_OF_BIRTH CHAR(10)     not null
 );
 
-INSERT INTO PERSON(NAME,SURNAME,DATE_OF_BIRTH) VALUES('Ivan','Petrov','13.07.1995'),('Masha','Sidorova','27.07.1990'),
-                                                      ('Petr','Grishko','04.04.1980');
-
 create unique index PERSON_ID_UINDEX
     on PERSON (ID);
 
 alter table PERSON
     add constraint PERSON_PK
         primary key (ID);
+
+INSERT INTO PERSON(NAME,SURNAME,DATE_OF_BIRTH) VALUES
+ ('Ivan','Petrov','13.07.1995')
+,('Masha','Sidorova','27.07.1990')
+,('Petr','Grishko','04.04.1980');
 
 
 

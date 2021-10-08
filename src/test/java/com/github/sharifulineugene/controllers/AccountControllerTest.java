@@ -71,7 +71,7 @@ public class AccountControllerTest{
     }
 
     @Test
-    public void newCardByIdAccount() throws Exception{
+    public void shouldReturnRedirectionByNewCardByIdAccount() throws Exception{
         CardDto card = new CardDto();
         card.setCardNumber("0000000000000028");
         card.setExpDate("11/24");
@@ -84,7 +84,7 @@ public class AccountControllerTest{
     }
 
     @Test
-    public void shouldReturnChangedBalance() throws Exception{
+    public void shouldReturnRedirectionByChangedBalance() throws Exception{
         Balance balance = new Balance();
         balance.setBalance(100);
         mvc.perform(MockMvcRequestBuilders.put("/accounts/1")
@@ -93,5 +93,6 @@ public class AccountControllerTest{
                 .andExpect(status().is3xxRedirection());
 
     }
+
 
 }

@@ -35,6 +35,7 @@ public class SpringConfig implements WebMvcConfigurer {
     HikariConfig hikariConfig (){
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName(environment.getProperty("db.driver.name"));
+        //String db_url = environment.getProperty();
         hikariConfig.setJdbcUrl(environment.getProperty("db.testUrl"));
         return hikariConfig;
     }

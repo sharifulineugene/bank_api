@@ -6,12 +6,34 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="person")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Person {
+    public Person(int id, String name, String surname, String date_of_birth) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.date_of_birth = date_of_birth;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id == person.id && Objects.equals(name, person.name) && Objects.equals(surname, person.surname) && Objects.equals(date_of_birth, person.date_of_birth) && Objects.equals(accounts, person.accounts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, date_of_birth, accounts);
+    }
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
